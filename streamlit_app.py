@@ -60,7 +60,7 @@ with tab2:
     st.subheader("Boy vs Girl Counts for Common Names")
     
     # Select 5 common names to compare
-    common_names = ["Rylan", "Jordan", "Taylor", "Tamryn", "Casey"]  # You can update this list
+    common_names = ["Rylan", "Jordan", "Taylor", "Richelle", "Casey"]  # You can update this list
     for name in common_names:
         name_data = data[data["Name"].str.lower() == name.lower()]
         if not name_data.empty:
