@@ -56,25 +56,23 @@ with tab2:
     }).set_index("Gender")
     st.bar_chart(comparison)
     
-    # Top-Heavy vs Spread Out Analysis (Boys)
-    st.subheader("Are Male Names Top-Heavy or Spread Out?")
-    boy_distribution = data[data["Gender"] == "M"]["Count"]
-    fig, ax = plt.subplots()
-    ax.hist(boy_distribution, bins=20, color="blue", alpha=0.7)
-    ax.set_title("Distribution of Male Name Counts")
-    ax.set_xlabel("Count")
-    ax.set_ylabel("Frequency")
-    st.pyplot(fig)
+    # Common Names: Comparing Boy and Girl Counts
+    st.subheader("Boy vs Girl Counts for Common Names")
     
-    # Top-Heavy vs Spread Out Analysis (Girls)
-    st.subheader("Are Female Names Top-Heavy or Spread Out?")
-    girl_distribution = data[data["Gender"] == "F"]["Count"]
-    fig, ax = plt.subplots()
-    ax.hist(girl_distribution, bins=20, color="pink", alpha=0.7)
-    ax.set_title("Distribution of Female Name Counts")
-    ax.set_xlabel("Count")
-    ax.set_ylabel("Frequency")
-    st.pyplot(fig)
+    # Select 5 common names to compare
+    common_names = ["Rylan", "Jordan", "Taylor", "Alex", "Casey"]  # You can update this list
+    for name in common_names:
+        name_data = data[data["Name"].str.lower() == name.lower()]
+        if not name_data.empty:
+            fig, ax = plt.subplots()
+            for gender in ["M", "F"]:
+                gender_data = name_data[name_data["Gender"] == gender]
+                count = gender_data["Count"].values[0] if not gender_data.empty else 0
+                ax.bar(gender, count, label=f"{gender} ({count})")
+            ax.set_title(f"Counts for Name: {name}")
+            ax.set_ylabel("Count")
+            ax.legend()
+            st.pyplot(fig)
 
 # Footer
-st.container().write("This Streamlit app visualizes name trends and distributions.")
+st.container().write("This Streamlit app visualizes name trends and comparisons.")
